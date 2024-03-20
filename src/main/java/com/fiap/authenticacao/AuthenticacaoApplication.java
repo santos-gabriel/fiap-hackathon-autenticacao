@@ -42,7 +42,7 @@ public class AuthenticacaoApplication {
             Usuario usuarioCadastrado = usuarioUseCasePort.cadastra(usuario01);
             System.out.println("Usuário cadastrado: " + usuarioCadastrado);
 
-            var usuarioLogin = usuarioUseCasePort.realizaLogin(usuarioCadastrado);
+            var usuarioLogin = usuarioUseCasePort.realizaLogin(new Usuario(null, new UserName("user.teste"), "123456678", new Senha("abcATest12@")));
             System.out.println("Login válido: " + usuarioLogin.isPresent());
         }
     }

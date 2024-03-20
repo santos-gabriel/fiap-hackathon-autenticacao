@@ -2,6 +2,7 @@ package com.fiap.authenticacao.domain.usecase;
 
 import com.fiap.authenticacao.domain.exception.LoginInvalidoException;
 import com.fiap.authenticacao.domain.exception.SenhaFracaException;
+import com.fiap.authenticacao.domain.exception.UsuarioExistenteException;
 import com.fiap.authenticacao.domain.model.Usuario;
 import com.fiap.authenticacao.domain.model.valueObject.Senha;
 import com.fiap.authenticacao.domain.model.valueObject.UserName;
@@ -36,9 +37,9 @@ public class UsuarioUseCase implements IUsuarioUseCasePort {
     }
 
     @Override
-    public Usuario cadastra(Usuario usuario) throws LoginInvalidoException, SenhaFracaException {
+    public Usuario cadastra(Usuario usuario) throws LoginInvalidoException, SenhaFracaException, UsuarioExistenteException {
         if (localizaPorNome(usuario.getNome()).isPresent()) {
-
+            throw new UsuarioExistenteException();
         }
         return repository.cadastra(usuario);
     }
