@@ -30,6 +30,7 @@ public class UsuarioControllerAdapter {
         Usuario user = Usuario.builder()
                 .nome(new UserName(usuario.getNome()))
                 .senha(new Senha(usuario.getSenha()))
+                .matricula(usuario.getMatricula())
                 .build();
         Optional<Usuario> usuarioLogin = usuarioUseCasePort.realizaLogin(user);
         if (usuarioLogin.isPresent()) {
