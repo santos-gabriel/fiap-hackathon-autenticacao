@@ -3,12 +3,12 @@ package com.fiap.authenticacao.infrastructure.persistence.entity;
 import com.fiap.authenticacao.domain.model.Usuario;
 import com.fiap.authenticacao.domain.model.valueObject.Senha;
 import com.fiap.authenticacao.domain.model.valueObject.UserName;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.UUID;
 
 @Entity(name = "usuarios")

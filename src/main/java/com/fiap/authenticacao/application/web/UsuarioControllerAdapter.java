@@ -7,13 +7,13 @@ import com.fiap.authenticacao.domain.model.Usuario;
 import com.fiap.authenticacao.domain.model.valueObject.Senha;
 import com.fiap.authenticacao.domain.model.valueObject.UserName;
 import com.fiap.authenticacao.domain.ports.in.IUsuarioUseCasePort;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +30,7 @@ public class UsuarioControllerAdapter {
         Usuario user = Usuario.builder()
                 .nome(new UserName(usuario.getNome()))
                 .senha(new Senha(usuario.getSenha()))
+                .matricula(usuario.getMatricula())
                 .build();
         Optional<Usuario> usuarioLogin = usuarioUseCasePort.realizaLogin(user);
         if (usuarioLogin.isPresent()) {
