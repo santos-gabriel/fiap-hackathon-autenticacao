@@ -3,6 +3,7 @@ package com.fiap.authenticacao.application.web.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -37,16 +38,12 @@ public class ConfigurationSecurity {
 
     @Bean
     public SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/authenticate").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated()
-                .and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().cors()
-                .and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+        return httpSecurity.csrf(crsf -> crsf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/authenticate").permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

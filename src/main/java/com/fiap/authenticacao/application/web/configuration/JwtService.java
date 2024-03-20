@@ -35,7 +35,7 @@ public class JwtService {
     }
 
     protected Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
     }
 
     protected Boolean isTokenExpired(String token) {
@@ -63,6 +63,7 @@ public class JwtService {
         try {
             Jwts.parser()
                     .setSigningKey(SECRET_KEY)
+                    .build()
                     .parseClaimsJws(token);
             final String username = extractUsername(token);
             return (username.equals(userDetails.getNome()) && !isTokenExpired(token));

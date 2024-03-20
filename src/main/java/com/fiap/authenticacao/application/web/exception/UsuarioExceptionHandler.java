@@ -4,12 +4,12 @@ import com.fiap.authenticacao.application.web.UsuarioControllerAdapter;
 import com.fiap.authenticacao.domain.exception.LoginInvalidoException;
 import com.fiap.authenticacao.domain.exception.SenhaFracaException;
 import com.fiap.authenticacao.domain.exception.UsuarioExistenteException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice(assignableTypes = UsuarioControllerAdapter.class)
 public class UsuarioExceptionHandler {
