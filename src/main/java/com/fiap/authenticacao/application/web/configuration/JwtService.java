@@ -72,7 +72,7 @@ public class JwtService {
                     .setSigningKey(SECRET_KEY)
                     .parseClaimsJws(token);
             final String username = extractUsername(token);
-            return (username.equals(userDetails.getNome()) && !isTokenExpired(token));
+            return (username.equals(userDetails.getNome().getValue()) && !isTokenExpired(token));
         } catch (ExpiredJwtException ex) {
             logger.error("JWT expired", ex.getMessage());
         } catch (IllegalArgumentException ex) {

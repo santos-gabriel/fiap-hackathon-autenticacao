@@ -1,8 +1,10 @@
 package com.fiap.authenticacao.application.web.configuration;
 
 import com.fiap.authenticacao.domain.model.Usuario;
+import com.fiap.authenticacao.domain.model.valueObject.Email;
 import com.fiap.authenticacao.domain.model.valueObject.UserName;
 import com.fiap.authenticacao.domain.ports.in.IUsuarioUseCasePort;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +17,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class JwtRequestFilter  extends OncePerRequestFilter {
@@ -32,15 +36,24 @@ public class JwtRequestFilter  extends OncePerRequestFilter {
 
         String username = null;
         String jwt = null;
+        Claims claims = null;
 
         if (authorizationHeader != null) {
             jwt = authorizationHeader.substring(7);
             username = jwtAccess.extractUsername(jwt);
+            claims = jwtAccess.extractAllClaims(jwt);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            Optional<Usuario> usuario = this.usuarioUseCasePort.localizaPorNome(new UserName(username));
-            if ((usuario.isPresent()) && (jwtAccess.validateToken(jwt, usuario.get()))) {
+            String nome = claims.get("nome", String.class);
+            String email = claims.get("email", String.class);
+            Usuario usuario = Usuario.builder()
+                    .id(UUID.fromString(claims.get("id", String.class)))
+                    .nome(Objects.nonNull(nome) ? new UserName(nome) : null)
+                    .matricula(claims.get("matricula", String.class))
+                    .email(Objects.nonNull(email) ? new Email(email) : null)
+                    .build();
+            if (jwtAccess.validateToken(jwt, usuario)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         usuario, null, null);
                 usernamePasswordAuthenticationToken

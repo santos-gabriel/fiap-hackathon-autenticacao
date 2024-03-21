@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class UsuarioUseCase implements IUsuarioUseCasePort {
@@ -43,6 +44,16 @@ public class UsuarioUseCase implements IUsuarioUseCasePort {
             throw new UsuarioExistenteException();
         }
         return repository.cadastra(usuario);
+    }
+
+    @Override
+    public Usuario atualizar(Usuario usuario, UUID id) throws LoginInvalidoException, SenhaFracaException, UsuarioExistenteException {
+        return repository.atualizar(usuario, id);
+    }
+
+    @Override
+    public void excluir(UUID id) throws LoginInvalidoException, SenhaFracaException, UsuarioExistenteException {
+        repository.excluir(id);
     }
 
     @Override

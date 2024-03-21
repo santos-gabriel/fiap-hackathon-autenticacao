@@ -49,7 +49,7 @@ public class AuthenticacaoApplication {
         }
 
         var usuarioJaCadastrado2 = usuarioUseCasePort.localizaPorNome(new UserName("gabriel.almeida"));
-        if (usuarioJaCadastrado.isEmpty()) {
+        if (usuarioJaCadastrado2.isEmpty()) {
             var usuario01 = Usuario.builder()
                     .id(UUID.randomUUID())
                     .nome(new UserName("gabriel.almeida"))
@@ -66,7 +66,7 @@ public class AuthenticacaoApplication {
         }
 
         var usuarioJaCadastrado3 = usuarioUseCasePort.localizaPorNome(new UserName("paulo.lobo"));
-        if (usuarioJaCadastrado.isEmpty()) {
+        if (usuarioJaCadastrado3.isEmpty()) {
             var usuario01 = Usuario.builder()
                     .id(UUID.randomUUID())
                     .nome(new UserName("paulo.lobo"))

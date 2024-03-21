@@ -1,6 +1,6 @@
 package com.fiap.authenticacao.application.web.exception;
 
-import com.fiap.authenticacao.application.web.UsuarioControllerAdapter;
+import com.fiap.authenticacao.application.web.AutenticacaoControllerAdapter;
 import com.fiap.authenticacao.domain.exception.EmailInvalidoException;
 import com.fiap.authenticacao.domain.exception.LoginInvalidoException;
 import com.fiap.authenticacao.domain.exception.SenhaFracaException;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-@ControllerAdvice(assignableTypes = UsuarioControllerAdapter.class)
+@ControllerAdvice(assignableTypes = AutenticacaoControllerAdapter.class)
 public class UsuarioExceptionHandler {
     @ExceptionHandler(SenhaFracaException.class)
     public ResponseEntity<?> senhaFraca(SenhaFracaException e, HttpServletRequest request) {

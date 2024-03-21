@@ -20,6 +20,7 @@ import java.util.UUID;
 public class UsuarioEntity {
     @Id
     @GeneratedValue
+    @Column(columnDefinition="UUID")
     private UUID id;
 
     @Embedded
@@ -62,4 +63,13 @@ public class UsuarioEntity {
                 .email(usuario.getEmail())
                 .build();
     }
+
+    public void atualizaDados(Usuario usuario) {
+        this.senha = usuario.getSenha();
+        this.nome = usuario.getNome();
+        this.matricula = usuario.getMatricula();
+        this.senha = usuario.getSenha();
+        this.email = usuario.getEmail();
+    }
+
 }
