@@ -10,6 +10,7 @@ import com.fiap.authenticacao.domain.ports.in.IUsuarioUseCasePort;
 import com.fiap.authenticacao.domain.ports.out.IUsuarioRepositoryPort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -42,5 +43,10 @@ public class UsuarioUseCase implements IUsuarioUseCasePort {
             throw new UsuarioExistenteException();
         }
         return repository.cadastra(usuario);
+    }
+
+    @Override
+    public List<Usuario> obterTodos() {
+        return repository.obterTodos();
     }
 }

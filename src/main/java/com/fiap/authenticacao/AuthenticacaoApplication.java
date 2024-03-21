@@ -1,6 +1,7 @@
 package com.fiap.authenticacao;
 
 import com.fiap.authenticacao.domain.model.Usuario;
+import com.fiap.authenticacao.domain.model.valueObject.Email;
 import com.fiap.authenticacao.domain.model.valueObject.Senha;
 import com.fiap.authenticacao.domain.model.valueObject.UserName;
 import com.fiap.authenticacao.domain.ports.in.IUsuarioUseCasePort;
@@ -37,12 +38,47 @@ public class AuthenticacaoApplication {
                     .nome(new UserName("user.teste"))
                     .senha(new Senha("abcATest12@"))
                     .matricula("123456678")
+                    .email(new Email("user@teste.com"))
                     .build();
 
             Usuario usuarioCadastrado = usuarioUseCasePort.cadastra(usuario01);
             System.out.println("Usuário cadastrado: " + usuarioCadastrado);
 
-            var usuarioLogin = usuarioUseCasePort.realizaLogin(new Usuario(null, new UserName("user.teste"), "123456678", new Senha("abcATest12@")));
+            var usuarioLogin = usuarioUseCasePort.realizaLogin(new Usuario(null, new UserName("user.teste"), "123456678", new Senha("abcATest12@"), new Email("user@teste.com")));
+            System.out.println("Login válido: " + usuarioLogin.isPresent());
+        }
+
+        var usuarioJaCadastrado2 = usuarioUseCasePort.localizaPorNome(new UserName("gabriel.almeida"));
+        if (usuarioJaCadastrado.isEmpty()) {
+            var usuario01 = Usuario.builder()
+                    .id(UUID.randomUUID())
+                    .nome(new UserName("gabriel.almeida"))
+                    .senha(new Senha("gabriel123@"))
+                    .matricula("123321")
+                    .email(new Email("gabriel@email.com"))
+                    .build();
+
+            Usuario usuarioCadastrado = usuarioUseCasePort.cadastra(usuario01);
+            System.out.println("Usuário cadastrado: " + usuarioCadastrado);
+
+            var usuarioLogin = usuarioUseCasePort.realizaLogin(new Usuario(null, new UserName("gabriel.almeida"), "123321", new Senha("gabriel123@"), new Email("gabriel@email.com")));
+            System.out.println("Login válido: " + usuarioLogin.isPresent());
+        }
+
+        var usuarioJaCadastrado3 = usuarioUseCasePort.localizaPorNome(new UserName("paulo.lobo"));
+        if (usuarioJaCadastrado.isEmpty()) {
+            var usuario01 = Usuario.builder()
+                    .id(UUID.randomUUID())
+                    .nome(new UserName("paulo.lobo"))
+                    .senha(new Senha("paulo123@"))
+                    .matricula("321123")
+                    .email( new Email("paulo@teste.com"))
+                    .build();
+
+            Usuario usuarioCadastrado = usuarioUseCasePort.cadastra(usuario01);
+            System.out.println("Usuário cadastrado: " + usuarioCadastrado);
+
+            var usuarioLogin = usuarioUseCasePort.realizaLogin(new Usuario(null, new UserName("paulo.lobo"), "321123", new Senha("paulo123@"), new Email("paulo@teste.com")));
             System.out.println("Login válido: " + usuarioLogin.isPresent());
         }
     }

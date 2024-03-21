@@ -6,6 +6,7 @@ import com.fiap.authenticacao.domain.model.Usuario;
 import com.fiap.authenticacao.domain.model.valueObject.Senha;
 import com.fiap.authenticacao.domain.model.valueObject.UserName;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IUsuarioRepositoryPort {
@@ -14,4 +15,5 @@ public interface IUsuarioRepositoryPort {
     Optional<Usuario> localizaPorNome(UserName nome) throws LoginInvalidoException;
     Optional<Usuario> localizaPorMatricula(String matricula) throws LoginInvalidoException;
     Usuario cadastra(Usuario usuario) throws LoginInvalidoException, SenhaFracaException;
+    List<Usuario> obterTodos();
 }

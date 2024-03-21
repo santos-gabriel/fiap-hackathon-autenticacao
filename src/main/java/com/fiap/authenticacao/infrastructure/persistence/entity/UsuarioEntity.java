@@ -1,6 +1,7 @@
 package com.fiap.authenticacao.infrastructure.persistence.entity;
 
 import com.fiap.authenticacao.domain.model.Usuario;
+import com.fiap.authenticacao.domain.model.valueObject.Email;
 import com.fiap.authenticacao.domain.model.valueObject.Senha;
 import com.fiap.authenticacao.domain.model.valueObject.UserName;
 import lombok.AllArgsConstructor;
@@ -20,17 +21,27 @@ public class UsuarioEntity {
     @Id
     @GeneratedValue
     private UUID id;
+
+    @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "value", column = @Column(name = "nome"))
     })
-    @Embedded
     private UserName nome;
+
     private String matricula;
+
+    @Embedded
     @AttributeOverrides({
             @AttributeOverride(name = "value", column = @Column(name = "senha"))
     })
-    @Embedded
     private Senha senha;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "value", column = @Column(name = "email"))
+    })
+    private Email email;
+
 
     public Usuario to(UsuarioEntity usuarioEntity) {
         return Usuario.builder()
@@ -38,6 +49,7 @@ public class UsuarioEntity {
                 .senha(usuarioEntity.getSenha())
                 .matricula(usuarioEntity.getMatricula())
                 .nome(usuarioEntity.getNome())
+                .email(usuarioEntity.getEmail())
                 .build();
     }
 
@@ -47,6 +59,7 @@ public class UsuarioEntity {
                 .senha(usuario.getSenha())
                 .matricula(usuario.getMatricula())
                 .nome(usuario.getNome())
+                .email(usuario.getEmail())
                 .build();
     }
 }

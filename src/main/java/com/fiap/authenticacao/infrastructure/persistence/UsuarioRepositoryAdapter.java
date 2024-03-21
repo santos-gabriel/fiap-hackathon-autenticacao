@@ -12,8 +12,10 @@ import com.fiap.authenticacao.infrastructure.persistence.repository.UsuarioRepos
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -88,5 +90,10 @@ public class UsuarioRepositoryAdapter implements IUsuarioRepositoryPort {
         usuario.atualizaSenha(new Senha(Encrypt.gerarHash(usuario.getSenha().getValue())));
         UsuarioEntity usersaved = repository.save(new UsuarioEntity().from(usuario));
         return new UsuarioEntity().to(usersaved);
+    }
+
+    @Override
+    public List<Usuario> obterTodos() {
+        return repository.findAll().stream().map(e -> new UsuarioEntity().to(e)).collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.fiap.authenticacao.application.web.exception;
 
 import com.fiap.authenticacao.application.web.UsuarioControllerAdapter;
+import com.fiap.authenticacao.domain.exception.EmailInvalidoException;
 import com.fiap.authenticacao.domain.exception.LoginInvalidoException;
 import com.fiap.authenticacao.domain.exception.SenhaFracaException;
 import com.fiap.authenticacao.domain.exception.UsuarioExistenteException;
@@ -26,6 +27,11 @@ public class UsuarioExceptionHandler {
     @ExceptionHandler(UsuarioExistenteException.class)
     public ResponseEntity<?> usuarioExistente(UsuarioExistenteException e, HttpServletRequest request) {
         StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Nome de usuário não disponível", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+    @ExceptionHandler(EmailInvalidoException.class)
+    public ResponseEntity<?> usuarioExistente(EmailInvalidoException e, HttpServletRequest request) {
+        StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Email inválido", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
 }
