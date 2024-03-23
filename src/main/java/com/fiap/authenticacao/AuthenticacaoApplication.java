@@ -55,7 +55,7 @@ public class AuthenticacaoApplication {
                     .nome(new UserName("gabriel.almeida"))
                     .senha(new Senha("gabriel123@"))
                     .matricula("123321")
-                    .email(new Email("gabriel@email.com"))
+                    .email(new Email("gabrielalmeidads@outlook.com"))
                     .build();
 
             Usuario usuarioCadastrado = usuarioUseCasePort.cadastra(usuario01);
@@ -72,7 +72,7 @@ public class AuthenticacaoApplication {
                     .nome(new UserName("paulo.lobo"))
                     .senha(new Senha("paulo123@"))
                     .matricula("321123")
-                    .email( new Email("paulo@teste.com"))
+                    .email( new Email("pauloloboneto@gmail.com"))
                     .build();
 
             Usuario usuarioCadastrado = usuarioUseCasePort.cadastra(usuario01);
